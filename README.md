@@ -1,5 +1,5 @@
 # stock-elt
-Build a reliable ELT pipeline for historical and daily stock price data, enabling analytics-ready KPIs and scenario analysis.
+Build a reliable ELT pipeline for historical and daily NVIDIA stock price data, enabling analytics-ready KPIs and scenario analysis.
 
 This project builds a reliable ELT pipeline to ingest historical and daily stock price data, store it in PostgreSQL as a raw source of truth, and establish a strong foundation for analytics-ready KPI tables and scenario-based analysis.
 
