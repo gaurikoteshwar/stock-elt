@@ -5,21 +5,21 @@ This project builds a reliable ELT pipeline to ingest historical and daily stock
 
 The primary focus is on correctness, idempotency, and maintainable data modeling rather than downstream analytics or visualisation.
 
-Current Scope (Phase 1)
-The current phase focuses exclusively on data ingestion and raw data reliability.
+Phase 1 Scope Phase 1 - done
+This phase focuses exclusively on data ingestion and raw data reliability.
 Included in scope:
 - Ingest historical and daily stock price data from the yfinance API
 - Load raw, append-only stock price data into PostgreSQL
 - Support idempotent daily updates (safe to re-run without duplication)
 - Define and enforce a stable raw data contract
 
-Out of Scope (Planned Future Phases)
+Planned Future Phases:
 The following are intentionally excluded from Phase 1 and will be added later:
 - Business KPI tables
 - dbt staging and transformation models
 - Monte Carlo simulations and what-if analysis
 - Dashboards and visualisations
-- Workflow orchestration (e.g. Airflow)
+- Workflow orchestration (e.g. Airflow: requiring Python 3.13 and below, my current version 3.14.2)
 
 High-Level Architecture
 
