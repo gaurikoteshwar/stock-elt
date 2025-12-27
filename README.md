@@ -5,28 +5,9 @@ This project builds a reliable ELT pipeline to ingest historical and daily stock
 
 The primary focus is on correctness, idempotency, and maintainable data modeling rather than downstream analytics or visualisation.
 
-Phase 1 Scope Phase 1 - done
-This phase focuses exclusively on data ingestion and raw data reliability.
-Included in scope:
-- Ingest historical and daily stock price data from the yfinance API
-- Load raw, append-only stock price data into PostgreSQL
-- Support idempotent daily updates (safe to re-run without duplication)
-- Define and enforce a stable raw data contract
-
-Planned Future Phases:
-The following are intentionally excluded from Phase 1 and will be added later:
-- Business KPI tables
-- dbt staging and transformation models
-- Monte Carlo simulations and what-if analysis
-- Dashboards and visualisations
-- Workflow orchestration (e.g. Airflow: requiring Python 3.13 and below, my current version 3.14.2)
-
 High-Level Architecture
 
 yfinance API -> Python (Extract + Load) -> PostgreSQL (raw.stock_prices)
-
-
-At this stage, no transformations or aggregations are applied to the data.
 
 Data Model (Raw Layer)
 Schema: raw
@@ -52,6 +33,23 @@ How to Run
 Setup and execution instructions will be added once the ingestion pipeline is implemented.
 
 Roadmap
-Phase 2: dbt staging models and business KPI tables
-Phase 3: Risk metrics, Monte Carlo simulations, and scenario analysis
-Phase 4: Visualisation and reporting layer
+Phase 2: dbt staging models and business KPI tables 
+Phase 3: Risk metrics, Monte Carlo simulations, and scenario analysis 
+Phase 4: Visualisation and reporting layer 
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Phase 1: Focused exclusively on data ingestion and raw data reliability - DONE
+- Ingest historical and daily stock price data from the yfinance API
+- Load raw, append-only stock price data into PostgreSQL
+- Support idempotent daily updates (safe to re-run without duplication)
+- Define and enforce a stable raw data contract
+
+Phase 2: Built staging table stg_stock_prices from raw stock data - DONE
+- Created KPI table stock_kpis_daily with metrics: daily return, 20-day rolling volatility, rolling Sharpe, max drawdown, OBV.
+- Validated data: row counts, date ranges, KPI sanity checks.
+- Visualized trends: close price, rolling Sharpe, year-over-year comparison, and interactive exploration with Plotly.
+
+
+Next: organize SQL scripts, integrate with dbt, and automate ETL via Airflow.
+
