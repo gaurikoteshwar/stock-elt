@@ -1,0 +1,15 @@
+{
+    "sqltools.connections": [
+        {
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "username": "postgres",
+            "password": "lily1234",
+            "database": "stock_etl",
+            "name": "stock_etl_local"
+        }
+    ]
+}

@@ -1,12 +1,30 @@
-/* Creating KPI definitions and inserting into the table*/
-WITH base AS (
+/* ============================================================
+Incremental KPI Build: analytics.stock_kpis_daily (NVDA)
+- Recomputes rolling context (30d buffer)
+- Inserts ONLY new dates
+============================================================ */
+
+WITH last_kpi_date AS (
     SELECT
-        symbol,
-        date,
-        close_price,
-        volume,
-        LAG(close_price) OVER (PARTITION BY symbol ORDER BY date) AS prev_close
-    FROM staging.stg_stock_prices
+        COALESCE(MAX(date), DATE '1900-01-01') AS max_date
+    FROM analytics.stock_kpis_daily
+    WHERE symbol = 'NVDA'
+),
+
+base AS (
+    SELECT
+        s.symbol,
+        s.date,
+        s.close_price,
+        s.volume,
+        LAG(s.close_price) OVER (
+            PARTITION BY s.symbol
+            ORDER BY s.date
+        ) AS prev_close
+    FROM staging.stg_stock_prices s
+    JOIN last_kpi_date l
+      ON s.date >= l.max_date - INTERVAL '30 days'
+    WHERE s.symbol = 'NVDA'
 ),
 
 returns AS (
@@ -71,24 +89,24 @@ INSERT INTO analytics.stock_kpis_daily (
     obv
 )
 SELECT
-    symbol,
-    date,
-    close_price,
-    daily_return,
-    rolling_vol_20d,
-    CASE 
-        WHEN rolling_vol_20d > 0 AND rolling_vol_20d IS NOT NULL 
-        THEN avg_return_20d / rolling_vol_20d 
-        ELSE 0 
+    d.symbol,
+    d.date,
+    d.close_price,
+    d.daily_return,
+    d.rolling_vol_20d,
+    CASE
+        WHEN d.rolling_vol_20d > 0
+        THEN d.avg_return_20d / d.rolling_vol_20d
     END AS rolling_sharpe_20d,
-    MIN( (close_price - running_peak) / NULLIF(running_peak, 0) ) 
-        OVER (
-            PARTITION BY symbol 
-            ORDER BY date 
-            ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
-        ) AS max_drawdown,
-    obv
-FROM drawdown_calc
-WHERE rolling_vol_20d IS NOT NULL;
-
--- Ensures full 20-day windows
+    MIN(
+        (d.close_price - d.running_peak) / NULLIF(d.running_peak, 0)
+    ) OVER (
+        PARTITION BY d.symbol
+        ORDER BY d.date
+        ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+    ) AS max_drawdown,
+    d.obv
+FROM drawdown_calc d
+JOIN last_kpi_date l
+  ON d.date > l.max_date
+WHERE d.rolling_vol_20d IS NOT NULL;

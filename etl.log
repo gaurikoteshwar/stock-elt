@@ -12,3 +12,6 @@
 2025-12-19 22:35:41,065 - INFO - No new price data available yet
 2025-12-19 22:36:46,782 - INFO - Updating NVDA from 2025-12-19 to 2025-12-19
 2025-12-19 22:36:48,001 - INFO - No new price data available yet
+2025-12-27 23:38:44,707 - INFO - Updating NVDA from 2025-12-19 to 2025-12-27
+2025-12-27 23:38:49,222 - INFO - Loaded 5 new rows
+2025-12-27 23:38:49,223 - WARNING - Missing price data for these dates: [datetime.date(2025, 12, 19), datetime.date(2025, 12, 20), datetime.date(2025, 12, 21), datetime.date(2025, 12, 22), datetime.date(2025, 12, 23), datetime.date(2025, 12, 24), datetime.date(2025, 12, 25), datetime.date(2025, 12, 26), datetime.date(2025, 12, 27)]
