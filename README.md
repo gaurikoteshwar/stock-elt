@@ -33,23 +33,34 @@ How to Run
 Setup and execution instructions will be added once the ingestion pipeline is implemented.
 
 Roadmap
-Phase 2: dbt staging models and business KPI tables 
+Phase 2: dbt staging models and business KPI tables, Visualisation of trends
 Phase 3: Risk metrics, Monte Carlo simulations, and scenario analysis 
-Phase 4: Visualisation and reporting layer 
+Phase 4:
+- Interactive analytics dashboard built with Streamlit, enabling exploration of KPIs and trends with date filters and summary cards
+- LLM-assisted analytics layer using a Hugging Face model for natural-language queries
+
+Data flow:
+1. User selects a question → app queries Postgres KPI tables
+2. Query results converted to pandas DataFrame
+3. Data slice, schema, and question passed to LLM
+4. LLM responds strictly based on provided data
+Technical principles: deterministic KPI computation with dbt/SQL, visualization with Plotly/Altair, LLM reasoning data-grounded only (no predictions)
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 
-Phase 1: Focused exclusively on data ingestion and raw data reliability - DONE
+Step 1: Focused exclusively on data ingestion and raw data reliability - DONE
 - Ingest historical and daily stock price data from the yfinance API
 - Load raw, append-only stock price data into PostgreSQL
 - Support idempotent daily updates (safe to re-run without duplication)
 - Define and enforce a stable raw data contract
 
-Phase 2: Built staging table stg_stock_prices from raw stock data - DONE
+Step 2: Built staging table stg_stock_prices from raw stock data - DONE
 - Created KPI table stock_kpis_daily with metrics: daily return, 20-day rolling volatility, rolling Sharpe, max drawdown, OBV.
 - Validated data: row counts, date ranges, KPI sanity checks.
 - Visualized trends: close price, rolling Sharpe, year-over-year comparison, and interactive exploration with Plotly.
 
 
-Next: organize SQL scripts, integrate with dbt, and automate ETL via Airflow.
+STep 3: organize SQL scripts, integrate with dbt - DONE
+
+Upcoming: automate ETL via Airflow.
 
