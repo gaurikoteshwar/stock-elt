@@ -34,6 +34,7 @@ Setup and execution instructions will be added once the ingestion pipeline is im
 
 Roadmap
 Phase 2: dbt staging models and business KPI tables, Visualisation of trends
+
 Phase 3: Risk metrics, Monte Carlo simulations, and scenario analysis 
 
 Phase 4:
