@@ -35,6 +35,7 @@ Setup and execution instructions will be added once the ingestion pipeline is im
 Roadmap
 Phase 2: dbt staging models and business KPI tables, Visualisation of trends
 Phase 3: Risk metrics, Monte Carlo simulations, and scenario analysis 
+
 Phase 4:
 - Interactive analytics dashboard built with Streamlit, enabling exploration of KPIs and trends with date filters and summary cards
 - LLM-assisted analytics layer using a Hugging Face model for natural-language queries
